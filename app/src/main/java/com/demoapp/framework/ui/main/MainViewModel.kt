@@ -1,4 +1,4 @@
-package com.demoapp
+package com.demoapp.framework.ui.main
 
 import android.util.Log
 import androidx.lifecycle.ViewModel
@@ -63,7 +63,6 @@ class MainViewModel @Inject constructor(
                             setIntent(UserIntent.RefreshUser)
                         },
                         noActionCallback = {
-                            Log.i("SNACKBAR", "fdfsdf:")
                             _uiState.value = currentUIState.copy(showSwipeToRefreshLoader = true)
                             _uiState.value = currentUIState.copy(showSwipeToRefreshLoader = false)
                         }

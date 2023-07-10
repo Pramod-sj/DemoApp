@@ -1,4 +1,4 @@
-package com.demoapp
+package com.demoapp.framework.ui.main
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -14,7 +14,6 @@ import coil.load
 import com.demoapp.business.model.ACCEPT_STATE_ACCEPT
 import com.demoapp.business.model.ACCEPT_STATE_DECLINE
 import com.demoapp.business.model.ACCEPT_STATE_UNKNOWN
-import com.demoapp.business.model.AcceptState
 import com.demoapp.business.model.User
 import com.demoapp.databinding.ItemUserProfileLayoutBinding
 
