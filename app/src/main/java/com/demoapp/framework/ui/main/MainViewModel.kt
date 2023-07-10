@@ -35,7 +35,8 @@ class MainViewModel @Inject constructor(
         UiState(
             users = emptyList(),
             showContentLoader = false,
-            showSwipeToRefreshLoader = false
+            showSwipeToRefreshLoader = false,
+            isForceFetchWarningShown = false
         )
     )
     val uiState = _uiState.asStateFlow()
@@ -54,20 +55,21 @@ class MainViewModel @Inject constructor(
 
     fun fetchUser(forceFetch: Boolean) {
         if (forceFetch) {
-            viewModelScope.launch {
-                _uiEvent.emit(
-                    UiEvent.SnackBarMessage(
-                        message = "Are you sure? You will loose the user data!",
+            _uiState.value = currentUIState.copy(showSwipeToRefreshLoader = true)
+            if (!currentUIState.isForceFetchWarningShown) {
+                viewModelScope.launch {
+                    _uiState.value = currentUIState.copy(isForceFetchWarningShown = true)
+                    _uiEvent.emit(UiEvent.SnackBarMessage(message = "Are you sure? You will loose the user data!",
                         action = "Fetch users",
                         actionCallback = {
                             setIntent(UserIntent.RefreshUser)
                         },
                         noActionCallback = {
-                            _uiState.value = currentUIState.copy(showSwipeToRefreshLoader = true)
                             _uiState.value = currentUIState.copy(showSwipeToRefreshLoader = false)
-                        }
-                    )
-                )
+                        }))
+                }
+            } else {
+                setIntent(UserIntent.RefreshUser)
             }
         } else setIntent(UserIntent.FetchUser)
     }
@@ -107,30 +109,27 @@ class MainViewModel @Inject constructor(
     private fun fetchShadiUsers(forceFetch: Boolean): Job {
         return viewModelScope.launch {
 
-            _uiState.value =
-                if (forceFetch) currentUIState.copy(showSwipeToRefreshLoader = true)
-                else currentUIState.copy(showContentLoader = true)
+            _uiState.value = if (forceFetch) currentUIState.copy(showSwipeToRefreshLoader = true)
+            else currentUIState.copy(showContentLoader = true)
 
             getRandomShadiUserUseCase(forceFetch).collect {
                 Log.i(TAG, it.toString())
                 when (it) {
                     is GetRandomShadiUserUseCase.UseCaseResult.GenericFailure -> {
-                        _uiState.value =
-                            currentUIState.copy(
-                                users = it.data,
-                                showContentLoader = false,
-                                showSwipeToRefreshLoader = false
-                            )
+                        _uiState.value = currentUIState.copy(
+                            users = it.data,
+                            showContentLoader = false,
+                            showSwipeToRefreshLoader = false
+                        )
                         _uiEvent.emit(UiEvent.ShowToastMessage(it.message))
                     }
 
                     is GetRandomShadiUserUseCase.UseCaseResult.Success -> {
-                        _uiState.value =
-                            currentUIState.copy(
-                                users = it.data,
-                                showContentLoader = false,
-                                showSwipeToRefreshLoader = false
-                            )
+                        _uiState.value = currentUIState.copy(
+                            users = it.data,
+                            showContentLoader = false,
+                            showSwipeToRefreshLoader = false
+                        )
                     }
                 }
             }
@@ -147,7 +146,8 @@ class MainViewModel @Inject constructor(
 data class UiState(
     val users: List<User>,
     val showContentLoader: Boolean,
-    val showSwipeToRefreshLoader: Boolean
+    val showSwipeToRefreshLoader: Boolean,
+    val isForceFetchWarningShown: Boolean
 )
 
 sealed class UiEvent {
