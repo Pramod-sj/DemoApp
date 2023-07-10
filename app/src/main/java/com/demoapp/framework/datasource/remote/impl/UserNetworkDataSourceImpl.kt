@@ -1,10 +1,9 @@
 package com.demoapp.framework.datasource.remote.impl
 
-import com.demoapp.business.ApiResult
-import com.demoapp.business.ErrorType
+import com.demoapp.business.data.remote.utils.ApiResult
 import com.demoapp.business.data.remote.UserNetworkDataSource
 import com.demoapp.business.model.User
-import com.demoapp.business.safeApiCall
+import com.demoapp.business.data.remote.utils.safeApiCall
 import com.demoapp.framework.datasource.remote.mapper.toDomain
 import com.demoapp.framework.datasource.remote.service.UserApiService
 import javax.inject.Inject

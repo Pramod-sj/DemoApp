@@ -1,6 +1,6 @@
 package com.demoapp.framework.datasource.remote.service
 
-import com.demoapp.framework.datasource.remote.model.ShadiResponse
+import com.demoapp.framework.datasource.remote.model.base_response.ShadiResponse
 import com.demoapp.framework.datasource.remote.model.user.UserNetworkEntity
 import retrofit2.http.GET
 import retrofit2.http.Query

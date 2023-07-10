@@ -1,10 +1,7 @@
-package com.demoapp.business
+package com.demoapp.business.data.remote.utils
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import okio.IOException
-import retrofit2.HttpException
-import java.net.SocketTimeoutException
 
 enum class ErrorType {
     HTTP_EXCEPTION,

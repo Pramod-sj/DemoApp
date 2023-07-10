@@ -1,6 +1,6 @@
 package com.demoapp.business.interactor
 
-import com.demoapp.business.ApiResult
+import com.demoapp.business.data.remote.utils.ApiResult
 import com.demoapp.business.data.local.UserCacheDataSource
 import com.demoapp.business.data.remote.UserNetworkDataSource
 import com.demoapp.business.model.User

@@ -1,4 +1,4 @@
-package com.demoapp.business
+package com.demoapp.business.data.remote.utils
 
 sealed class ApiResult<out T> {
 

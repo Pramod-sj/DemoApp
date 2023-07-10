@@ -1,4 +1,4 @@
-package com.demoapp.framework.datasource.remote.model
+package com.demoapp.framework.datasource.remote.model.base_response
 
 
 import com.google.gson.annotations.SerializedName
